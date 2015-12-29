@@ -1,7 +1,7 @@
-CFG ?= Debug
+CFG ?= osx
 
-CC := /usr/bin/g++
-CFLAGS += -c -D__LINUX__ -std=c++11 -fPIC
+CC := /usr/bin/clang++
+CFLAGS += -m32 -c -D__LINUX__ -std=c++11 -fPIC
 INCLUDE := -I Include
 LIBDIR := lib/$(CFG)
 
