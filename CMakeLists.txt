@@ -10,7 +10,7 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 endif()
 
 # Static by default.
-set (BUILD_SHARED_LIBS OFF)
+#set (BUILD_SHARED_LIBS OFF)
 add_definitions(-DUNICODE)
 
 include_directories (GTEngine/Include)

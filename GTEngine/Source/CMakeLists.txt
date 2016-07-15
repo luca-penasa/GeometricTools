@@ -15,6 +15,6 @@ endif()
 # Create the library.
 add_library (${MODULE_NAME} ${${MODULE_NAME}_SRCS})
 
-install (TARGETS ${MODULE_NAME} 
-		ARCHIVE DESTINATION lib 
-		LIBRARY DESTINATION lib)
+#install (TARGETS ${MODULE_NAME}
+#		ARCHIVE DESTINATION lib
+#		LIBRARY DESTINATION lib)
