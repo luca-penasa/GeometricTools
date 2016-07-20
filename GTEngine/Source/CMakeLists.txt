@@ -12,8 +12,36 @@ else()
 	file (GLOB ${MODULE_NAME}_SRCS *.cpp)
 endif()
 
+set(sources
+	GTEnginePCH.cpp
+	GteHistogram.cpp
+	GteImage.cpp
+	GteImageUtility2.cpp
+	GteImageUtility3.cpp
+	GteMarchingCubes.cpp
+	GteMarchingCubesTable.cpp
+	GteLogger.cpp
+	GteLogToFile.cpp
+	GteLogToStdout.cpp
+	GteLogToStringArray.cpp
+	GteTimer.cpp
+	GteWrapper.cpp
+	GteBitHacks.cpp
+	GteBSPrecision.cpp
+	GteEdgeKey.cpp
+	GteETManifoldMesh.cpp
+	GteGenerateMeshUV.cpp
+	GteIEEEBinary16.cpp
+	GteTetrahedronKey.cpp
+	GteTriangleKey.cpp
+	GteTSManifoldMesh.cpp
+	GteUIntegerAP32.cpp
+	GteVEManifoldMesh.cpp
+#	GteVETManifoldMesh.cpp
+	)
+
 # Create the library.
-add_library (${MODULE_NAME} ${${MODULE_NAME}_SRCS})
+add_library (${MODULE_NAME} ${sources})
 
 #install (TARGETS ${MODULE_NAME}
 #		ARCHIVE DESTINATION lib
