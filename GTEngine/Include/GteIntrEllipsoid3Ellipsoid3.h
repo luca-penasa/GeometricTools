@@ -70,9 +70,9 @@ Ellipsoid3<Real> const& ellipsoid0, Ellipsoid3<Real> const& ellipsoid1)
     R0.SetCol(1, ellipsoid0.axis[1]);
     R0.SetCol(2, ellipsoid0.axis[2]);
     Matrix3x3<Real> D0{
-        one / (ellipsoid0.extent[0] * ellipsoid0.extent[0]),
-        one / (ellipsoid0.extent[1] * ellipsoid0.extent[1]),
-        one / (ellipsoid0.extent[2] * ellipsoid0.extent[2]) };
+        one / (ellipsoid0.extent[0] * ellipsoid0.extent[0]), zero, zero,
+        zero, one / (ellipsoid0.extent[1] * ellipsoid0.extent[1]), zero,
+        zero, zero, one / (ellipsoid0.extent[2] * ellipsoid0.extent[2]) };
 
     // Get the parameters of ellipsoid1.
     Vector3<Real> K1 = ellipsoid1.center;
@@ -81,19 +81,19 @@ Ellipsoid3<Real> const& ellipsoid0, Ellipsoid3<Real> const& ellipsoid1)
     R1.SetCol(1, ellipsoid1.axis[1]);
     R1.SetCol(2, ellipsoid1.axis[2]);
     Matrix3x3<Real> D1{
-        one / (ellipsoid1.extent[0] * ellipsoid1.extent[0]),
-        one / (ellipsoid1.extent[1] * ellipsoid1.extent[1]),
-        one / (ellipsoid1.extent[2] * ellipsoid1.extent[2]) };
+        one / (ellipsoid1.extent[0] * ellipsoid1.extent[0]), zero, zero,
+        zero, one / (ellipsoid1.extent[1] * ellipsoid1.extent[1]), zero,
+        zero, zero, one / (ellipsoid1.extent[2] * ellipsoid1.extent[2]) };
 
     // Compute K2.
     Matrix3x3<Real> D0NegHalf{
-        ellipsoid0.extent[0],
-        ellipsoid0.extent[1],
-        ellipsoid0.extent[2] };
+        ellipsoid0.extent[0], zero, zero,
+        zero, ellipsoid0.extent[1], zero,
+        zero, zero, ellipsoid0.extent[2] };
     Matrix3x3<Real> D0Half{
-        one / ellipsoid0.extent[0],
-        one / ellipsoid0.extent[1],
-        one / ellipsoid0.extent[2] };
+        one / ellipsoid0.extent[0], zero, zero,
+        zero, one / ellipsoid0.extent[1], zero,
+        zero, zero, one / ellipsoid0.extent[2] };
     Vector3<Real> K2 = D0Half*((K1 - K0)*R0);
 
     // Compute M2.
@@ -326,9 +326,8 @@ void TIQuery<Real, Ellipsoid3<Real>, Ellipsoid3<Real>>::GetRoots(Real d0,
     Real d0c0 = d0 * c0;
     Real d1c1 = d1 * c1;
 
-    std::function<Real(Real)> F = [d0, d1, d0c0, d1c1](Real s)
+    std::function<Real(Real)> F = [&one, d0, d1, d0c0, d1c1](Real s)
     {
-        Real const one = (Real)1;
         Real invN0 = one / (d0*s - one);
         Real invN1 = one / (d1*s - one);
         Real term0 = d0c0 * invN0 * invN0;
@@ -426,9 +425,8 @@ void TIQuery<Real, Ellipsoid3<Real>, Ellipsoid3<Real>>::GetRoots(Real d0,
     Real d1c1 = d1 * c1;
     Real d2c2 = d2 * c2;
 
-    std::function<Real(Real)> F = [d0, d1, d2, d0c0, d1c1, d2c2](Real s)
+    std::function<Real(Real)> F = [&one, d0, d1, d2, d0c0, d1c1, d2c2](Real s)
     {
-        Real const one = (Real)1;
         Real invN0 = one / (d0*s - one);
         Real invN1 = one / (d1*s - one);
         Real invN2 = one / (d2*s - one);
@@ -439,9 +437,8 @@ void TIQuery<Real, Ellipsoid3<Real>, Ellipsoid3<Real>>::GetRoots(Real d0,
         return f;
     };
 
-    std::function<Real(Real)> DF = [d0, d1, d2, d0c0, d1c1, d2c2](Real s)
+    std::function<Real(Real)> DF = [&one, d0, d1, d2, d0c0, d1c1, d2c2](Real s)
     {
-        Real const one = (Real)1;
         Real const two = (Real)2;
         Real invN0 = one / (d0*s - one);
         Real invN1 = one / (d1*s - one);
